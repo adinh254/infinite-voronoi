@@ -26,6 +26,7 @@ func _ready() -> void:
 	if use_random_master_seed:
 		randomize()
 		master_seed = randi()
+		print("Using master seed: %d" % master_seed)
 	_chunk_dir.open_new(save_path + '/' + str(master_seed))
 
 

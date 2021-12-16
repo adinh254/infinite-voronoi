@@ -22,14 +22,17 @@ func _ready():
 
 
 func _physics_process(_delta: float) -> void:
+	var speed_multiplier: float = 1.0
+	if Input.is_action_pressed("cam_pan_boost"):
+		speed_multiplier *= 2
 	if Input.is_action_pressed("ui_up"):
-		center.position.y -= camera_speed
+		center.position.y -= camera_speed * speed_multiplier
 	if Input.is_action_pressed("ui_down"):
-		center.position.y += camera_speed
+		center.position.y += camera_speed * speed_multiplier
 	if Input.is_action_pressed("ui_left"):
-		center.position.x -= camera_speed
+		center.position.x -= camera_speed * speed_multiplier
 	if Input.is_action_pressed("ui_right"):
-		center.position.x += camera_speed
+		center.position.x += camera_speed * speed_multiplier
 
 
 func _draw() -> void:
