@@ -1,0 +1,19 @@
+[remap]
+
+importer="animated_texture"
+type="AnimatedTexture"
+path="res://.import/shot.gif-cf60ca4d66eb8fa1acd4b6499f936c82.atex"
+
+[deps]
+
+source_file="res://assets/free/Sideview Sci-Fi - Patreon Collection/Sprites/cyberpunk-detective/GIF Previews/shot.gif"
+dest_files=[ "res://.import/shot.gif-cf60ca4d66eb8fa1acd4b6499f936c82.atex" ]
+
+[params]
+
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=0
+max_frames=0

@@ -1,0 +1,19 @@
+[remap]
+
+importer="animated_texture"
+type="AnimatedTexture"
+path="res://.import/alien-enemy-idle-CLEAR.gif-31c9c39dc4ac6f21f3e992b7092cd5c9.atex"
+
+[deps]
+
+source_file="res://assets/free/Sideview Sci-Fi - Patreon Collection/Sprites/alien-walking-enemy/GIFS/alien-enemy-idle-CLEAR.gif"
+dest_files=[ "res://.import/alien-enemy-idle-CLEAR.gif-31c9c39dc4ac6f21f3e992b7092cd5c9.atex" ]
+
+[params]
+
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=0
+max_frames=0

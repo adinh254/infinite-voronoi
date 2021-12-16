@@ -1,0 +1,19 @@
+[remap]
+
+importer="animated_texture"
+type="AnimatedTexture"
+path="res://.import/alien-enemy-2-flying.gif-a475f551dad1902cf71748a9d8ec3ed7.atex"
+
+[deps]
+
+source_file="res://assets/free/Sideview Sci-Fi - Patreon Collection/Sprites/alien-flying-enemy/GIFS/alien-enemy-2-flying.gif"
+dest_files=[ "res://.import/alien-enemy-2-flying.gif-a475f551dad1902cf71748a9d8ec3ed7.atex" ]
+
+[params]
+
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=0
+max_frames=0

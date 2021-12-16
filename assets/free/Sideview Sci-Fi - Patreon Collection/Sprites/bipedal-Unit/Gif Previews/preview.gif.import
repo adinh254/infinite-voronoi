@@ -1,0 +1,19 @@
+[remap]
+
+importer="animated_texture"
+type="AnimatedTexture"
+path="res://.import/preview.gif-530fad10ae44ef9c8a8dd7328ac94bcd.atex"
+
+[deps]
+
+source_file="res://assets/free/Sideview Sci-Fi - Patreon Collection/Sprites/bipedal-Unit/Gif Previews/preview.gif"
+dest_files=[ "res://.import/preview.gif-530fad10ae44ef9c8a8dd7328ac94bcd.atex" ]
+
+[params]
+
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=0
+max_frames=0

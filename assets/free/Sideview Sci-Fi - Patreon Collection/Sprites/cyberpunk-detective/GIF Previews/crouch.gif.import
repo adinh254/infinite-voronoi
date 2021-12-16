@@ -1,0 +1,19 @@
+[remap]
+
+importer="animated_texture"
+type="AnimatedTexture"
+path="res://.import/crouch.gif-d11574801b67960fe1105d930b286bb6.atex"
+
+[deps]
+
+source_file="res://assets/free/Sideview Sci-Fi - Patreon Collection/Sprites/cyberpunk-detective/GIF Previews/crouch.gif"
+dest_files=[ "res://.import/crouch.gif-d11574801b67960fe1105d930b286bb6.atex" ]
+
+[params]
+
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=0
+max_frames=0

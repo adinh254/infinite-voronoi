@@ -1,0 +1,19 @@
+[remap]
+
+importer="animated_texture"
+type="AnimatedTexture"
+path="res://.import/alien-enemy-walk.gif-96635c0d1c6e8fcc88b194543c79e1e0.atex"
+
+[deps]
+
+source_file="res://assets/free/Sideview Sci-Fi - Patreon Collection/Sprites/alien-walking-enemy/GIFS/alien-enemy-walk.gif"
+dest_files=[ "res://.import/alien-enemy-walk.gif-96635c0d1c6e8fcc88b194543c79e1e0.atex" ]
+
+[params]
+
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=0
+max_frames=0

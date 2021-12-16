@@ -1,0 +1,19 @@
+[remap]
+
+importer="animated_texture"
+type="AnimatedTexture"
+path="res://.import/space-marine-jump.gif-4b4845af608ef8c2c2309dc23bc2f6ec.atex"
+
+[deps]
+
+source_file="res://assets/free/Sideview Sci-Fi - Patreon Collection/Sprites/space-marine/GIFS/space-marine-jump.gif"
+dest_files=[ "res://.import/space-marine-jump.gif-4b4845af608ef8c2c2309dc23bc2f6ec.atex" ]
+
+[params]
+
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=0
+max_frames=0

@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/procedural/visibility_bounds/visibility_bounds.gd" type="Script" id=1]
+
+[node name="VisibilityBounds" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Left" type="VisibilityNotifier2D" parent="."]
+rect = Rect2( -60, 0, 120, 1920 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Top" type="VisibilityNotifier2D" parent="."]
+rect = Rect2( 0, -60, 1920, 120 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Right" type="VisibilityNotifier2D" parent="."]
+position = Vector2( 1920, 0 )
+rect = Rect2( -60, 0, 120, 1920 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Bottom" type="VisibilityNotifier2D" parent="."]
+position = Vector2( 0, 1920 )
+rect = Rect2( 0, -60, 1920, 120 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[connection signal="screen_entered" from="Left" to="." method="_on_Left_screen_entered"]
+[connection signal="screen_entered" from="Top" to="." method="_on_Top_screen_entered"]
+[connection signal="screen_entered" from="Right" to="." method="_on_Right_screen_entered"]
+[connection signal="screen_entered" from="Bottom" to="." method="_on_Bottom_screen_entered"]

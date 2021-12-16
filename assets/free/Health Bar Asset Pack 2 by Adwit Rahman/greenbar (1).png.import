@@ -1,0 +1,35 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/greenbar (1).png-550ecde2f8db9818446a7eec3f395b4a.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://assets/free/Health Bar Asset Pack 2 by Adwit Rahman/greenbar (1).png"
+dest_files=[ "res://.import/greenbar (1).png-550ecde2f8db9818446a7eec3f395b4a.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+process/normal_map_invert_y=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0

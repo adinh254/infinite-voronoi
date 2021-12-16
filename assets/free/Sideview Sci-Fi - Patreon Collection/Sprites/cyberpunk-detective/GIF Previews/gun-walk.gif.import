@@ -1,0 +1,19 @@
+[remap]
+
+importer="animated_texture"
+type="AnimatedTexture"
+path="res://.import/gun-walk.gif-acb419573c24338960c0927c249af209.atex"
+
+[deps]
+
+source_file="res://assets/free/Sideview Sci-Fi - Patreon Collection/Sprites/cyberpunk-detective/GIF Previews/gun-walk.gif"
+dest_files=[ "res://.import/gun-walk.gif-acb419573c24338960c0927c249af209.atex" ]
+
+[params]
+
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=0
+max_frames=0

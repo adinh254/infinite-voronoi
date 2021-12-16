@@ -1,0 +1,19 @@
+[remap]
+
+importer="animated_texture"
+type="AnimatedTexture"
+path="res://.import/space-marine-shoot.gif-a85f6d8443ba9bbfda03e95bfee49c9e.atex"
+
+[deps]
+
+source_file="res://assets/free/Sideview Sci-Fi - Patreon Collection/Sprites/space-marine/GIFS/space-marine-shoot.gif"
+dest_files=[ "res://.import/space-marine-shoot.gif-a85f6d8443ba9bbfda03e95bfee49c9e.atex" ]
+
+[params]
+
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=0
+max_frames=0

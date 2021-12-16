@@ -1,0 +1,19 @@
+[remap]
+
+importer="animated_texture"
+type="AnimatedTexture"
+path="res://.import/propFlame.gif-bef218f686c3cb32071775765c96fffb.atex"
+
+[deps]
+
+source_file="res://assets/free/fire_effects/standard_engine_prototype.fx.propFlame/propFlame.gif"
+dest_files=[ "res://.import/propFlame.gif-bef218f686c3cb32071775765c96fffb.atex" ]
+
+[params]
+
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=0
+max_frames=0

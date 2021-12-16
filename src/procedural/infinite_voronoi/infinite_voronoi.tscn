@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/procedural/chunk_grid/chunk_grid.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/procedural/infinite_voronoi/infinite_voronoi.gd" type="Script" id=3]
+
+[node name="InfiniteVoronoi" type="Node2D"]
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+use_random_master_seed = true
+
+[node name="ChunkGrid" parent="." instance=ExtResource( 1 )]

@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/procedural/infinite_voronoi/infinite_voronoi.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/procedural/visibility_bounds/visibility_bounds.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/demos/procedural_voronoi/procedural_voronoi.gd" type="Script" id=3]
+[ext_resource path="res://src/dynamic_camera/dynamic_camera.tscn" type="PackedScene" id=4]
+
+[node name="ProceduralVoronoi" type="Node2D"]
+script = ExtResource( 3 )
+random_walk = true
+
+[node name="InfiniteVoronoi" parent="." instance=ExtResource( 1 )]
+relaxation_count = 2
+
+[node name="VisibilityBounds" parent="." instance=ExtResource( 2 )]
+
+[node name="DynamicCamera" parent="." instance=ExtResource( 4 )]
+position = Vector2( 960, 540 )
+current = true
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 960, 540 )
+
+[connection signal="region_built" from="InfiniteVoronoi" to="." method="_on_InfiniteVoronoi_region_built"]
+[connection signal="bounds_entered" from="VisibilityBounds" to="." method="_on_VisibilityBounds_bounds_entered"]
+
+[editable path="InfiniteVoronoi"]
