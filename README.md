@@ -29,9 +29,9 @@ You could also "smooth" out the shapes by increasing the Lloyd relaxation counts
 <p>
   Left Parameters: seed=2765389554; percolation_threshold=0.5; relaxation_count=1
   <br>
-  Center Parameters: seed=2241024972; percolation_threshold=0.3; relaxation_count=2
+  Center Parameters: seed=3702110211; percolation_threshold=0.7; relaxation_count=3
   <br>
-  Right Parameters: seed=3702110211; percolation_threshold=0.7; relaxation_count=3
+  Right Parameters: seed=2241024972; percolation_threshold=0.3; relaxation_count=2
 </p>
 
 ### Built With
