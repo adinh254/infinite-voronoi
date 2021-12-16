@@ -15,16 +15,17 @@ In order to generate an "infinite" world, the tool uses disk space and saves the
 The Voronoi generated chunks are pseudorandomly generated using a combination of Godot's seed randomizer and my own hash functions to be able to generate chunks that will always be in the same state when using the same seed.
 
 The tool also has a feature that simulate caves by using percolation thresholds with a random walk algorithm. This feature is mainly based on [percolation theory](https://en.wikipedia.org/wiki/Percolation_theory).
-You could also "smoothen" out the shapes by increasing the Lloyd relaxation counts employed by the godot_voronoi bindings.
+You could also "smooth" out the shapes by increasing the Lloyd relaxation counts employed by the godot_voronoi bindings.
 
 <!-- Random Walk & Percolation Examples -->
 ### Random Walk & Percolation Examples
 
-<p align="left" width="100%">
-  <img width="32%" align="left" src="/images/2765389554-1-0.5.gif?raw=true">
-  <img width="32%" align="center" src="/images/2241024972-2-0.3.gif?raw=true">
-  <img width="32%" align="right" src="/images/3702110211-3-0.7.gif?raw=true">
+<p align width="100%">
+  <img width="31%" align="left" src="/images/2765389554-1-0.5.gif?raw=true">
+  <img width="31%" align="center" src="/images/2241024972-2-0.3.gif?raw=true">
+  <img width="31%" align="left" src="/images/3702110211-3-0.7.gif?raw=true">
 </p>
+
 <p>
   Left Parameters: seed=2765389554; percolation_threshold=0.5; relaxation_count=1
   <br>
