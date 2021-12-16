@@ -7,8 +7,12 @@
 
 [node name="ProceduralVoronoi" type="Node2D"]
 script = ExtResource( 3 )
+random_walk = true
+walk_color = Color( 0.294118, 0.235294, 0.388235, 1 )
 
 [node name="InfiniteVoronoi" parent="." instance=ExtResource( 1 )]
+use_random_master_seed = false
+relaxation_count = 2
 
 [node name="VisibilityBounds" parent="." instance=ExtResource( 2 )]
 
