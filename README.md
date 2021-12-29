@@ -8,8 +8,7 @@
 This project is a tool coded in GDScript and C++ for use in a game I'm developing in Godot. The purpose of it is to seamlessly and infinitely generate interconnected polygons 
 within the viewport. 
 
-Voronoi diagrams are mainly generated using Fortune's algorithm. The Fortune's algorithm add-on and libraries used in order to generate these diagrams
-was my own modified [fork](https://github.com/adinh254/godot_voronoi) of [rakai93's godot_voronoi](https://github.com/rakai93/godot_voronoi) which I modified from their Godot engine module implementation to instead use GDNative C++ bindings.
+Voronoi diagrams are generated using Fortune's algorithm. The GDNative C++ bindings used to generate these diagrams is my own modified [fork](https://github.com/adinh254/godot_voronoi) of [rakai93's godot_voronoi](https://github.com/rakai93/godot_voronoi).
 
 In order to generate an "infinite" world, the tool uses disk space and saves the generated polygons into world chunks in order to save memory. 
 The Voronoi generated chunks are pseudorandomly generated using a combination of Godot's seed randomizer and my own hash functions to be able to generate chunks that will always be in the same state when using the same seed.
