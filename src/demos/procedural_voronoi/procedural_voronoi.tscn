@@ -8,11 +8,8 @@
 [node name="ProceduralVoronoi" type="Node2D"]
 script = ExtResource( 3 )
 random_walk = true
-walk_color = Color( 0.294118, 0.235294, 0.388235, 1 )
 
 [node name="InfiniteVoronoi" parent="." instance=ExtResource( 1 )]
-use_random_master_seed = false
-relaxation_count = 2
 
 [node name="VisibilityBounds" parent="." instance=ExtResource( 2 )]
 
@@ -23,7 +20,7 @@ current = true
 [node name="Position2D" type="Position2D" parent="."]
 position = Vector2( 960, 540 )
 
-[connection signal="region_built" from="InfiniteVoronoi" to="." method="_on_InfiniteVoronoi_region_built"]
+[connection signal="render_chunk" from="InfiniteVoronoi" to="." method="_on_InfiniteVoronoi_render_chunk"]
 [connection signal="bounds_entered" from="VisibilityBounds" to="." method="_on_VisibilityBounds_bounds_entered"]
 
 [editable path="InfiniteVoronoi"]

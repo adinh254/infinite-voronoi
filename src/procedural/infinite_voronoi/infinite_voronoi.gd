@@ -6,38 +6,49 @@ extends Node2D
 # S = unit of scale (Default: 10 pixels per 1 meter)
 # C = average size of cavities in the cave. Determines number of points in the square chunk.
 
-signal region_built
+signal render_chunk
 
 const Globals := preload("res://src/globals.gd")
 
-export var master_seed: int = 0 setget set_master_seed, get_master_seed
-export var use_random_master_seed: bool = false setget set_use_random_master_seed, get_use_random_master_seed
+export var main_seed: int = 0 setget set_main_seed, get_main_seed
+export var use_random_main_seed: bool = false setget set_use_random_main_seed, get_use_random_main_seed
 export var average_cell_area: float = 32.0 * 32.0 # 32x32m or 320x320 Pixels
 export var relaxation_count: int = 0 # Number of Lloyd relaxation iterations when generating regions.
-export var save_path: String = "res://save"
-var _chunk_dir := ChunkDirectory.new()
+export var chunk_data_dir: String = "res://save"
+export var random_walk: bool = false
+export var percolation_threshold: float = 0.5
+var _region := VoronoiRegion.new() setget private_set
+var _chunk_rw := ChunkReadWrite.new() setget private_set
 var _screen_rect := Rect2() setget private_set
+var _render_rect := Rect2() setget private_set
+var _rng := RandomNumberGenerator.new() setget private_set
 
-onready var chunk_grid := $ChunkGrid
-onready var seed_count := int(chunk_grid.chunk_size * Globals.UNIT_SCALE * Globals.UNIT_SCALE * Globals.UNIT_SCALE / average_cell_area)
+onready var cell_grid: CellGrid = $CellGrid setget set_cell_grid, get_cell_grid
+onready var seed_count := int(cell_grid.cell_size * Globals.UNIT_SCALE * Globals.UNIT_SCALE * Globals.UNIT_SCALE / average_cell_area) setget set_seed_count, get_seed_count
+
 
 func _ready() -> void:
 	set_physics_process(false)
-	if use_random_master_seed:
+	if use_random_main_seed:
 		randomize()
-		master_seed = randi()
-		print("Using master seed: %d" % master_seed)
-	_chunk_dir.open_new(save_path + '/' + str(master_seed))
+		main_seed = randi()
+		print("Using main seed: %d" % main_seed)
+	_chunk_rw.open_new_dir(chunk_data_dir + '/' + str(main_seed))
+	# warning-ignore:return_value_discarded
+	_region.connect("chunk_loaded", self, "_on_VoronoiRegion_chunk_loaded")
+	_region.set_points_per_chunk(seed_count, seed_count)
+	_region.set_cell_grid(cell_grid)
+	_region.set_chunk_rw(_chunk_rw)
+	_region.set_main_seed(main_seed)
 
 
-func _physics_process(_delta) -> void:
+func _physics_process(_delta: float) -> void:
 	set_physics_process(false)
-	var render_rect: Rect2 = chunk_grid.get_region_intersected_with_rect(_screen_rect)
-	var region_grid_pos: Vector2 = chunk_grid.global_to_map(render_rect.position) - Vector2.ONE # Subtract one because top-left is inclusive.
-	var region_grid_end: Vector2 = chunk_grid.global_to_map(render_rect.end)
+	var region_grid_pos: Vector2 = cell_grid.global_to_map(_render_rect.position) - Vector2.ONE # Subtract one because top-left is inclusive.
+	var region_grid_end: Vector2 = cell_grid.global_to_map(_render_rect.end)
 	var region_grid_size: Vector2 = region_grid_end - region_grid_pos + Vector2.ONE
-	var region: VoronoiRegion = _build_new_region(region_grid_pos, region_grid_size)
-	emit_signal('region_built', region, render_rect)
+	_region.set_gridview(int(region_grid_pos.x), int(region_grid_pos.y), int(region_grid_size.x), int(region_grid_size.y))
+	_region.generate_voronoi_objects(relaxation_count)
 
 
 func update_screen_rect(p_screen_rect: Rect2, p_padding: float=0.0) -> void:
@@ -45,32 +56,52 @@ func update_screen_rect(p_screen_rect: Rect2, p_padding: float=0.0) -> void:
 	# Padding will modify the view rectangle size and area.
 	set_physics_process(true)
 	_screen_rect = p_screen_rect.grow(p_padding)
+	_render_rect = cell_grid.get_region_intersected_with_rect(_screen_rect)
 
 
-func set_master_seed(p_master_seed: int) -> void:
-	master_seed = p_master_seed
-
-func get_master_seed() -> int:
-	return master_seed
+func get_render_rect() -> Rect2:
+	return _render_rect
 
 
-func set_use_random_master_seed(p_use_random_master_seed: bool) -> void:
-	use_random_master_seed = p_use_random_master_seed
+func set_main_seed(p_main_seed: int) -> void:
+	main_seed = p_main_seed
 
 
-func get_use_random_master_seed() -> bool:
-	return use_random_master_seed
+func get_main_seed() -> int:
+	return main_seed
 
 
-func _build_new_region(p_grid_pos: Vector2, p_region_size: Vector2) -> VoronoiRegion:
-	var region := VoronoiRegion.new()
-	region.set_gridview(int(p_grid_pos.x), int(p_grid_pos.y), int(p_region_size.x), int(p_region_size.y))
-	region.set_gen_point_range(seed_count, seed_count)
-	region.set_chunk_grid(chunk_grid)
-	region.set_chunk_dir(_chunk_dir)
-	region.set_master_seed(master_seed)
-	region.build_objects(relaxation_count)
-	return region
+func set_use_random_main_seed(p_use_random_main_seed: bool) -> void:
+	use_random_main_seed = p_use_random_main_seed
+
+
+func get_use_random_main_seed() -> bool:
+	return use_random_main_seed
+
+
+func set_cell_grid(p_cell_grid: CellGrid) -> void:
+	cell_grid = p_cell_grid
+
+
+func get_cell_grid() -> CellGrid:
+	return cell_grid
+
+
+func set_seed_count(p_seed_count) -> void:
+	if p_seed_count <= 0:
+		push_error("Seed Count must be greater than zero!")
+	else:
+		seed_count = p_seed_count
+
+
+func get_seed_count() -> int:
+	return seed_count
+
+
+func _on_VoronoiRegion_chunk_loaded(p_voro_chunk: VoronoiChunk) -> void:
+	var global_chunk_pos: Vector2 = to_global(cell_grid.map_to_world(p_voro_chunk.get_chunk_col(), p_voro_chunk.get_chunk_row()))
+	if _render_rect.has_point(global_chunk_pos):
+		emit_signal("render_chunk", global_chunk_pos, p_voro_chunk)
 
 
 func private_set(_value=null):
