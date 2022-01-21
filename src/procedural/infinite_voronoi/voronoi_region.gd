@@ -1,6 +1,5 @@
 class_name VoronoiRegion
 extends Reference
-# TODO REFACTOR File loading options if player wants to save or only generate.
 
 signal chunk_loaded
 
@@ -18,12 +17,12 @@ var _cell_to_world := Transform2D() setget private_set
 var _world_transform := Transform2D() setget private_set # world transform of the position cell.
 var _rng := RandomNumberGenerator.new() setget private_set
 var _hasher := RandomHasher2D.new() setget private_set
-var _chunk_map := VariantMap.new()
+var _chunk_map := VariantMap.new() setget private_set
 
 
 func generate_voronoi_objects(p_relax_iterations: int=0) -> void:
 	# Builds the voronoi objects in the current chunk grid view.
-	# Loads a region of chunks from disk if it can find on save directory, 
+	# Loads a region of chunks from disk if it can find on save directory,
 	# else will generate new points and write to a file on disk.
 	_cell_to_world = cell_grid.get_cell_world_transform()
 	_world_transform = Transform2D.IDENTITY.translated(cell_grid.map_to_world(pos_col, pos_row))
@@ -35,11 +34,23 @@ func generate_voronoi_objects(p_relax_iterations: int=0) -> void:
 		for j in region_row_count:
 			var cell_col: int = pos_col + i
 			var cell_row: int = pos_row + j
+
+			print("Processing chunk %d_%d." % [cell_col, cell_row])
+
 			var chunk := Chunk.new()
 			if !chunk_rw.chunk_exists(cell_col, cell_row):
+
+				print("Generating chunk %d_%d." % [cell_col, cell_row]) # DEBUG
+
 				chunk = _generate_chunk_from(cell_col, cell_row)
 				chunk_rw.save_chunk(chunk)
 			else:
+				# DEBUG START
+				if chunk_rw.is_chunk_cached(cell_col, cell_row):
+					print("Using cached chunk %d_%d." % [cell_col, cell_row])
+				else:
+					print("Loaded chunk %d_%d from disk." % [cell_col, cell_row])
+				# DEBUG END
 				chunk = chunk_rw.load_chunk(cell_col, cell_row)
 			var voro_chunk := VoronoiChunk.new(chunk)
 			voro_chunk.set_chunk_rw(chunk_rw)
@@ -82,8 +93,8 @@ func get_row_count() -> int:
 	return _chunk_map.get_height()
 
 
-func set_gridview(p_col: int, p_row: int, p_col_count: int, p_row_count: int) -> void:
-	# Sets up this region's "view rectangle" of the chunks in its grid. 
+func resize(p_col: int, p_row: int, p_col_count: int, p_row_count: int) -> void:
+	# Sets up this region's "view rectangle" of the chunks in its grid.
 	if p_col_count < 1 || p_row_count < 1:
 		push_error("Column or Row count in this region needs to be greater than 0.")
 	else:
@@ -144,8 +155,6 @@ func set_max_points_per_chunk(p_max_points_per_chunk: int) -> void:
 
 
 func _make_diagram(p_points: PoolVector2Array, p_relax_iterations: int) -> Reference:
-	# TODO REFACTOR Figure out a way so the diagram is dependent on an object that can be modified outside of this class.
-	# Make sure to reload using load_chunks if any changes to chunk_map are made as the diagram is dependent on the contents of chunk_map.
 	_voronoi.set_points(p_points)
 	if p_relax_iterations:
 		_voronoi.relax_points(p_relax_iterations)
@@ -158,7 +167,7 @@ func _generate_chunk_from(p_col: int, p_row: int) -> Chunk:
 	_hasher.hash_seed = main_seed
 	var hashed_seed: int = rand_seed(_hasher.hash_2di(p_col, p_row))[1]
 	var points: PoolVector2Array = _cell_to_world.xform(_generate_white_noise(hashed_seed)) # Scale the normal generated point coordinates to cell size.
-	
+
 	# Set Values to be saved on disks.
 	new_chunk.col = p_col
 	new_chunk.row = p_row

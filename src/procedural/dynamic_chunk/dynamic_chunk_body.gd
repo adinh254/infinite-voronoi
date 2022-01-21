@@ -8,11 +8,11 @@ extends StaticBody2D
 
 const Globals := preload("res://src/globals.gd")
 
-export var chunk_size: float = 96.0 setget set_chunk_size, get_chunk_size
-var _chunk_dims := Vector2(chunk_size * Globals.UNIT_SCALE, chunk_size * Globals.UNIT_SCALE) setget private_set
-var _chunk_rect := Rect2(Vector2.ZERO, _chunk_dims) setget private_set
+export var cell_size: float = 96.0 setget set_cell_size, get_cell_size
+var _cell_dims := Vector2(cell_size * Globals.UNIT_SCALE, cell_size * Globals.UNIT_SCALE) setget private_set
+var _cell_rect := Rect2(Vector2.ZERO, _cell_dims) setget private_set # Local cell rectangle relative to this body. 
 #var _applied_effect_transforms: Array = [] setget private_set # Array of size Effect.Types.MAX where each index contains a nested array of transformations local to this chunk.
-onready var _poly_owners: Array = get_shape_owners() setget private_set # DynamicChunkShape owners.
+onready var _poly_owners: Array = get_shape_owners() setget private_set # DynamiccellShape owners.
 onready var _main_owner: int = _poly_owners[0] setget private_set # Main root index will be always be 0.
 
 
@@ -40,23 +40,24 @@ func shape_owner_add_poly_node(p_poly_node: PolyNode2D, p_owner: int=_main_owner
 	shape_owner_get_owner(p_owner).add_poly_node(p_poly_node)
 
 
-func set_chunk_size(p_chunk_size: float) -> void:
-	chunk_size = p_chunk_size
-	_chunk_dims = Vector2(p_chunk_size * Globals.UNIT_SCALE, p_chunk_size * Globals.UNIT_SCALE)
+func set_cell_size(p_cell_size: float) -> void:
+	cell_size = p_cell_size
+	_cell_dims = Vector2(p_cell_size * Globals.UNIT_SCALE, p_cell_size * Globals.UNIT_SCALE)
 
 
-func _on_ProceduralVoronoi_dirty_rect_updated(p_dirty_rect: Rect2) -> void:
+func _on_VisibilityBounds_bounding_rect_updated(p_global_rect: Rect2) -> void:
 	# This will call queue_free and commit the chunk before it's completely freed.
-	if !global_transform.xform(_chunk_rect).intersects(p_dirty_rect):
+	if !global_transform.xform(_cell_rect).intersects(p_global_rect):
 		for owner_id in _poly_owners:
 			var chunk_shape: DynamicChunkShape = shape_owner_get_owner(owner_id)
 			var commit: GDScriptFunctionState = chunk_shape.commit_outlines()
-			yield(commit, "completed")
+			if commit is GDScriptFunctionState:
+				yield(commit, "completed")
 		queue_free()
 
 
-func get_chunk_size() -> float:
-	return chunk_size
+func get_cell_size() -> float:
+	return cell_size
 
 
 func private_set(_value=null) -> void:

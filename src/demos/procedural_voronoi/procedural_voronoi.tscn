@@ -7,9 +7,9 @@
 
 [node name="ProceduralVoronoi" type="Node2D"]
 script = ExtResource( 3 )
-random_walk = true
 
 [node name="InfiniteVoronoi" parent="." instance=ExtResource( 1 )]
+region_buffer_count = 2
 
 [node name="VisibilityBounds" parent="." instance=ExtResource( 2 )]
 

@@ -18,11 +18,11 @@ func global_to_map(p_global_pos: Vector2) -> Vector2:
 	return _cell_transform.affine_inverse().xform(global_transform.xform_inv(p_global_pos)).floor()
 
 
-func get_region_intersected_with_rect(p_aabb: Rect2) -> Rect2:
-	var aabb_pos_cell: Vector2 = global_to_map(p_aabb.position)
-	var aabb_end_cell: Vector2 = global_to_map(p_aabb.end)
-	var pos_cell_global: Vector2 = map_to_world(int(aabb_pos_cell.x), int(aabb_pos_cell.y))
-	var end_cell_global: Vector2 = map_to_world(int(aabb_end_cell.x), int(aabb_end_cell.y))
+func get_region_intersected_with_rect(p_global_rect: Rect2) -> Rect2:
+	var bounds_pos_cell: Vector2 = global_to_map(p_global_rect.position)
+	var bounds_end_cell: Vector2 = global_to_map(p_global_rect.end)
+	var pos_cell_global: Vector2 = map_to_world(int(bounds_pos_cell.x), int(bounds_pos_cell.y))
+	var end_cell_global: Vector2 = map_to_world(int(bounds_end_cell.x), int(bounds_end_cell.y))
 	return Rect2(pos_cell_global, end_cell_global + _cell_transform.get_scale() - pos_cell_global)
 
 

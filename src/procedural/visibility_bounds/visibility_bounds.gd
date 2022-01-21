@@ -3,6 +3,7 @@ extends Node2D
 
 
 signal bounds_entered
+signal bounding_rect_updated
 
 onready var left_bound: VisibilityNotifier2D = $Left
 onready var top_bound: VisibilityNotifier2D = $Top
@@ -10,21 +11,23 @@ onready var right_bound: VisibilityNotifier2D = $Right
 onready var bottom_bound: VisibilityNotifier2D = $Bottom
 
 
-func enclose_rect(p_rect: Rect2) -> void:
-	# Sets all of the VisibilityNotifier2D rects to enclose this Rect2 region.
-	left_bound.global_position = p_rect.position
-	top_bound.global_position = p_rect.position
-	right_bound.global_position = Vector2(p_rect.end.x, p_rect.position.y)
-	bottom_bound.global_position = Vector2(p_rect.position.x, p_rect.end.y)
+func update_global_bounding_rect(p_global_rect: Rect2) -> void:
+	# Sets all of the VisibilityNotifier2D rects to enclose this global Rect2 region.
+	left_bound.global_position = p_global_rect.position
+	top_bound.global_position = p_global_rect.position
+	right_bound.global_position = Vector2(p_global_rect.end.x, p_global_rect.position.y)
+	bottom_bound.global_position = Vector2(p_global_rect.position.x, p_global_rect.end.y)
 	
-	var grow_size := Vector2(p_rect.size.x - top_bound.rect.size.x, p_rect.size.y - left_bound.rect.size.y)
+	var grow_size := Vector2(p_global_rect.size.x - top_bound.rect.size.x, p_global_rect.size.y - left_bound.rect.size.y)
 	left_bound.rect = left_bound.rect.grow_margin(MARGIN_BOTTOM, grow_size.y)
 	top_bound.rect = top_bound.rect.grow_margin(MARGIN_RIGHT, grow_size.x)
 	right_bound.rect = right_bound.rect.grow_margin(MARGIN_BOTTOM, grow_size.y)
 	bottom_bound.rect = bottom_bound.rect.grow_margin(MARGIN_RIGHT, grow_size.x)
+	
+	emit_signal("bounding_rect_updated", get_global_bounding_rect())
 
 
-func get_enclosed_rect() -> Rect2:
+func get_global_bounding_rect() -> Rect2:
 	var rect_end := Vector2(bottom_bound.rect.size.x, right_bound.rect.size.y)
 	return Rect2(left_bound.global_position, rect_end)
 

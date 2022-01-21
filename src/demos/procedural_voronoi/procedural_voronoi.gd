@@ -3,10 +3,7 @@ extends Node2D
 
 const DynamicChunkBodyScene: PackedScene = preload("res://src/procedural/dynamic_chunk/dynamic_chunk_body.tscn") 
 
-# TODO CONTINUED Figure out whether to keep track of active chunk in this class or in StaticDestructible.
-export var random_walk: bool = false
-#export var walk_color := Color(0.0, 1.0, 0.0)
-#export var percolation_threshold: float = 0.5 setget set_percolation_threshold, get_percolation_threshold
+export var random_walk: bool = true
 export var camera_speed: float = 5.0
 
 #var _shapes: Array = []
@@ -37,29 +34,20 @@ func _physics_process(_delta: float) -> void:
 		center.position.x += camera_speed * speed_multiplier
 
 
-#func _draw() -> void:
-#	if random_walk:
-#		for polygon in _shapes:
-#			draw_colored_polygon(polygon.points, walk_color)
-#	else:
-#		for polygon in _shapes:
-#			draw_colored_polygon(polygon.points, Color(randf(), randf(), randf()))
-#	for rect in _rects:
-#		draw_rect(rect, Color(0.0, 0.0, 1.0), false, 2.0)
-
-
 func _on_VisibilityBounds_bounds_entered(p_padding: float) -> void:
 	inf_voronoi.update_screen_rect(camera.get_camera_screen_rect(), p_padding)
-	var dirty_rect: Rect2 = inf_voronoi.get_render_rect()
-	visibility_bounds.enclose_rect(dirty_rect)
+	var global_bounding_rect: Rect2 = inf_voronoi.get_global_grid_rect()
+	visibility_bounds.update_global_bounding_rect(global_bounding_rect)
 
 
 func _on_InfiniteVoronoi_render_chunk(p_global_pos: Vector2, p_voro_chunk: VoronoiChunk) -> void:
 	var chunk_body: DynamicChunkBody = DynamicChunkBodyScene.instance()
 	add_child(chunk_body)
+	# warning-ignore:return_value_discarded
+	visibility_bounds.connect("bounding_rect_updated", chunk_body, "_on_VisibilityBounds_bounding_rect_updated")
 	chunk_body.position = to_local(p_global_pos)
 	chunk_body.shape_owner_set_chunk_model(p_voro_chunk)
-	chunk_body.build_poly_node_tree()
+	chunk_body.build_poly_node_tree(random_walk)
 
 
 func private_set(_value=null):
