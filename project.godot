@@ -47,7 +47,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "ProceduralVoronoi",
 "language": "GDScript",
-"path": "res://src/demos/procedural_voronoi/procedural_voronoi.gd"
+"path": "res://src/main/procedural_voronoi/procedural_voronoi.gd"
 }, {
 "base": "HashingContext",
 "class": "RandomHasher2D",
@@ -69,7 +69,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/procedural/infinite_voronoi/voronoi_chunk.gd"
 }, {
-"base": "",
+"base": "Reference",
 "class": "VoronoiDiagram",
 "language": "NativeScript",
 "path": "res://src/voronoi/voronoi_diagram.gdns"
@@ -105,7 +105,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Infinite Voronoi"
-run/main_scene="res://src/demos/procedural_voronoi/procedural_voronoi.tscn"
+run/main_scene="res://src/main/procedural_voronoi/procedural_voronoi.tscn"
 config/icon="res://icon.png"
 
 [display]
