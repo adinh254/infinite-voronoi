@@ -20,7 +20,6 @@ export var region_buffer_count: int = 1 setget set_region_buffer_count, get_regi
 var _chunk_rw := ChunkReadWrite.new() setget private_set
 var _screen_rect := Rect2() setget private_set
 var _global_rect := Rect2() setget private_set
-var _rng := RandomNumberGenerator.new() setget private_set
 var _regions: Array = [] setget private_set # Array for rotating region caches.
 
 onready var cell_grid: CellGrid = $CellGrid setget set_cell_grid, get_cell_grid

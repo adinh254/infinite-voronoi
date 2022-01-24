@@ -6,9 +6,6 @@ const DynamicChunkBodyScene: PackedScene = preload("res://src/procedural/dynamic
 export var random_walk: bool = true
 export var camera_speed: float = 5.0
 
-#var _shapes: Array = []
-#var _rects: Array = []
-var _rng := RandomNumberGenerator.new() setget private_set
 onready var inf_voronoi: InfiniteVoronoi = $InfiniteVoronoi
 onready var visibility_bounds: VisibilityBounds = $VisibilityBounds
 onready var camera: DynamicCamera = $DynamicCamera

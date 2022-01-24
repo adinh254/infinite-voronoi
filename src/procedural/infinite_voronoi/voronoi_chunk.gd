@@ -67,12 +67,12 @@ func get_clip_outlines() -> Array:
 	return _chunk.get_clip_outlines()
 
 
-func set_union_outlines(p_union_outlines: Array) -> void:
-	_chunk.set_union_outlines(p_union_outlines)
+func set_merge_outlines(p_merge_outlines: Array) -> void:
+	_chunk.set_merge_outlines(p_merge_outlines)
 
 
-func get_union_outlines() -> Array:
-	return _chunk.get_union_outlines()
+func get_merge_outlines() -> Array:
+	return _chunk.get_merge_outlines()
 
 
 func set_polygons(p_polygons: Array) -> void:

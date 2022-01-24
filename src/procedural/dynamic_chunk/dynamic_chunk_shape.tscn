@@ -11,4 +11,4 @@ operation = 0
 [node name="Clip" type="PolyNode2D" parent="Root"]
 operation = 2
 
-[node name="Union" type="PolyNode2D" parent="Root"]
+[node name="Merge" type="PolyNode2D" parent="Root"]

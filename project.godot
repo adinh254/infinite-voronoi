@@ -14,11 +14,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/procedural/cell_grid/cell_grid.gd"
 }, {
-"base": "Directory",
-"class": "ChunkDirectory",
-"language": "GDScript",
-"path": "res://src/procedural/chunk_directory.gd"
-}, {
 "base": "Reference",
 "class": "ChunkReadWrite",
 "language": "GDScript",
@@ -54,11 +49,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/procedural/random_hasher_2d.gd"
 }, {
-"base": "Reference",
-"class": "ResRef",
-"language": "GDScript",
-"path": "res://src/scripts/res_ref.gd"
-}, {
 "base": "Node2D",
 "class": "VisibilityBounds",
 "language": "GDScript",
@@ -86,7 +76,6 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "CellGrid": "",
-"ChunkDirectory": "",
 "ChunkReadWrite": "",
 "DynamicCamera": "",
 "DynamicChunkBody": "",
@@ -94,7 +83,6 @@ _global_script_class_icons={
 "InfiniteVoronoi": "",
 "ProceduralVoronoi": "",
 "RandomHasher2D": "",
-"ResRef": "",
 "VisibilityBounds": "",
 "VoronoiChunk": "",
 "VoronoiDiagram": "",
@@ -107,6 +95,10 @@ _global_script_class_icons={
 config/name="Infinite Voronoi"
 run/main_scene="res://src/main/procedural_voronoi/procedural_voronoi.tscn"
 config/icon="res://icon.png"
+
+[debug]
+
+gdscript/warnings/unused_class_variable=true
 
 [display]
 

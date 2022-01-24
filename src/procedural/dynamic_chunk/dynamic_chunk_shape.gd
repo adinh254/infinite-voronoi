@@ -1,5 +1,6 @@
 class_name DynamicChunkShape
 extends PolyCollisionShape2D
+# This node when added under a Physics2D object will become a shape owner that is responsible with Voronoi and CSG operations.
 
 const Chunk := preload("res://src/procedural/chunk.gd")
 
@@ -13,14 +14,8 @@ enum CSGState {
 var chunk_model := VoronoiChunk.new(Chunk.new()) setget set_chunk_model, get_chunk_model
 onready var root: PolyNode2D = $Root
 onready var clip := $Root/Clip # Outline node that is the parent of a OP_DIFF PolyNode2Ds.
-onready var union: PolyNode2D = $Root/Union  # Outline node that is the parent of OP_UNION PolyNode2Ds.
+onready var merge: PolyNode2D = $Root/Merge  # Outline node that is the parent of OP_UNION PolyNode2Ds.
 var _state: int = CSGState.UNCHANGED setget private_set
-
-#var __backer := ResRef.new(Chunk) setget private_set
-# warning-ignore:unused_class_variable
-#export var custom_chunk: Resource setget set_custom_chunk, get_custom_chunk
-
-#export var test_texture: Texture = preload("res://assets/free/snowdrift1 bl/snowdrift1_albedo.png")
 
 
 func _ready() -> void:
@@ -45,20 +40,18 @@ func build_boolean_polygons_tree(p_walk: bool=true) -> void:
 	var clip_outlines: Array = chunk_model.get_clip_outlines()
 	if !clip_outlines.empty():
 		clip.make_from_outlines(clip_outlines)
-	var union_outlines: Array = chunk_model.get_union_outlines()
-	if !union_outlines.empty():
-		union.make_from_outlines(union_outlines)
+	var merge_outlines: Array = chunk_model.get_merge_outlines()
+	if !merge_outlines.empty():
+		merge.make_from_outlines(merge_outlines)
 
 
-func new_clip_child(p_outline: PoolVector2Array) -> void:
-	# warning-ignore:return_value_discarded
-	clip.new_child(p_outline)
+func add_clip_child(p_poly_node: PolyNode2D) -> void:
+	clip.add_child(p_poly_node)
 	_state = CSGState.IS_CHANGING
 
 
-func new_union_child(p_outline: PoolVector2Array) -> void:
-	# warning-ignore:return_value_discarded
-	union.new_child(p_outline)
+func add_merge_child(p_poly_node: PolyNode2D) -> void:
+	merge.add_child(p_poly_node)
 	_state = CSGState.IS_CHANGING
 
 
@@ -71,7 +64,7 @@ func commit_outlines() -> void:
 			continue
 		CSGState.IS_CHANGING, CSGState.CHANGED:
 			chunk_model.set_clip_outlines(clip.get_outlines())
-			chunk_model.set_union_outlines(union.get_outlines())
+			chunk_model.set_merge_outlines(merge.get_outlines())
 			chunk_model.commit_chunk()
 
 
@@ -79,7 +72,7 @@ func _on_Self_shapes_applied() -> void:
 	_state = CSGState.CHANGED
 
 
-#func set_custom_chunk(p_chunk_resource: Chunk) -> void: 
+#func set_custom_chunk(p_chunk_resource: Chunk) -> void:
 #	__backer.resource = p_chunk_resource
 #	# Add clip polygons to body.
 #	var clip_outlines: Array = p_chunk_resource.get_clip_outlines()
@@ -91,11 +84,11 @@ func _on_Self_shapes_applied() -> void:
 #		_poly.operation = PolyNode2D.OP_NONE
 
 
-#func get_custom_chunk() -> Chunk: 
+#func get_custom_chunk() -> Chunk:
 #	return __backer.resource as Chunk
 
 
-#func get_chunk_resource() -> Chunk: 
+#func get_chunk_resource() -> Chunk:
 #	return __backer.resource as Chunk
 
 
