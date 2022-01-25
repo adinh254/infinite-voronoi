@@ -8,7 +8,9 @@ script = ExtResource( 1 )
 [node name="Root" type="PolyNode2D" parent="."]
 operation = 0
 
-[node name="Clip" type="PolyNode2D" parent="Root"]
-operation = 2
+[node name="Subjects" type="PolyNode2D" parent="Root"]
 
 [node name="Merge" type="PolyNode2D" parent="Root"]
+
+[node name="Clip" type="PolyNode2D" parent="Root"]
+operation = 2

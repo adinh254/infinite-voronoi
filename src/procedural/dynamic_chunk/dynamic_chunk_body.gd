@@ -24,6 +24,10 @@ func shape_owner_set_chunk_model(p_chunk_model: VoronoiChunk, p_owner: int=_main
 	shape_owner_get_owner(p_owner).set_chunk_model(p_chunk_model)
 
 
+func shape_owner_set_texture(p_texture: Texture, p_owner: int=_main_owner) -> void:
+	shape_owner_get_owner(p_owner).set_texture(p_texture)
+
+
 func clip_colliders(p_clipper: ConvexPolygonShape2D, p_transform: Transform2D, p_owner: int =_main_owner) -> void:
 	var clip_node := PolyNode2D.new()
 	clip_node.points = p_clipper.points

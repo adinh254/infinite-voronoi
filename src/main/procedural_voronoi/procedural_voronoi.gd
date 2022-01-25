@@ -5,6 +5,7 @@ const DynamicChunkBodyScene: PackedScene = preload("res://src/procedural/dynamic
 
 export var random_walk: bool = true
 export var camera_speed: float = 5.0
+export(Texture) var test_texture
 
 onready var inf_voronoi: InfiniteVoronoi = $InfiniteVoronoi
 onready var visibility_bounds: VisibilityBounds = $VisibilityBounds
@@ -14,7 +15,7 @@ onready var center: Position2D = $Position2D
 
 func _ready():
 	camera.follow(center)
-	inf_voronoi.update_screen_rect(camera.get_camera_screen_rect())
+	inf_voronoi.update_screen_rect(visibility_bounds.get_global_bounding_rect())
 
 
 func _physics_process(_delta: float) -> void:
@@ -44,6 +45,9 @@ func _on_InfiniteVoronoi_render_chunk(p_global_pos: Vector2, p_voro_chunk: Voron
 	visibility_bounds.connect("bounding_rect_updated", chunk_body, "_on_VisibilityBounds_bounding_rect_updated")
 	chunk_body.position = to_local(p_global_pos)
 	chunk_body.shape_owner_set_chunk_model(p_voro_chunk)
+	
+	chunk_body.shape_owner_set_texture(test_texture) # DEBUG
+	
 	chunk_body.build_poly_node_tree(random_walk)
 
 

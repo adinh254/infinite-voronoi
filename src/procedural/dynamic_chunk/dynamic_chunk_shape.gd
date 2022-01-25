@@ -10,11 +10,13 @@ enum CSGState {
 	CHANGED
 }
 
-
+ # NOTE: The clip node always Needs to be the last child to perform difference operations last.
 var chunk_model := VoronoiChunk.new(Chunk.new()) setget set_chunk_model, get_chunk_model
 onready var root: PolyNode2D = $Root
-onready var clip := $Root/Clip # Outline node that is the parent of a OP_DIFF PolyNode2Ds.
-onready var merge: PolyNode2D = $Root/Merge  # Outline node that is the parent of OP_UNION PolyNode2Ds.
+onready var texture: Texture = root.texture setget set_texture, get_texture
+onready var subjects: PolyNode2D = root.get_node("Subjects") # Subject shapes that need to be the first child for boolean operations.
+onready var merge: PolyNode2D = root.get_node("Merge")  # Outline node that is the parent of OP_UNION PolyNode2Ds.
+onready var clip: PolyNode2D = root.get_node("Clip") # Outline node that is the parent of a OP_DIFF PolyNode2Ds.
 var _state: int = CSGState.UNCHANGED setget private_set
 
 
@@ -31,18 +33,27 @@ func get_chunk_model() -> VoronoiChunk:
 	return chunk_model
 
 
+func set_texture(p_texture: Texture) -> void:
+	root.texture = p_texture
+	texture = root.texture
+
+
+func get_texture() -> Texture:
+	return texture
+
+
 func build_boolean_polygons_tree(p_walk: bool=true) -> void:
 	# Build the boolean PolyNode2D tree from the currently set chunk model.
-	var root_polygons: Array = chunk_model.get_walked_polygons() if p_walk else chunk_model.get_polygons()
-	for polygon in root_polygons:
+	var subject_polygons: Array = chunk_model.get_walked_polygons() if p_walk else chunk_model.get_polygons()
+	for polygon in subject_polygons:
 		# warning-ignore:return_value_discarded
-		root.new_child(polygon)
-	var clip_outlines: Array = chunk_model.get_clip_outlines()
-	if !clip_outlines.empty():
-		clip.make_from_outlines(clip_outlines)
+		subjects.new_child(polygon)
 	var merge_outlines: Array = chunk_model.get_merge_outlines()
 	if !merge_outlines.empty():
 		merge.make_from_outlines(merge_outlines)
+	var clip_outlines: Array = chunk_model.get_clip_outlines()
+	if !clip_outlines.empty():
+		clip.make_from_outlines(clip_outlines)
 
 
 func add_clip_child(p_poly_node: PolyNode2D) -> void:

@@ -9,6 +9,7 @@
 script = ExtResource( 1 )
 
 [node name="InfiniteVoronoi" parent="." instance=ExtResource( 4 )]
+use_random_main_seed = true
 region_buffer_count = 2
 
 [node name="VisibilityBounds" parent="." instance=ExtResource( 3 )]

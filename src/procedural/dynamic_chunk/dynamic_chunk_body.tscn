@@ -4,6 +4,7 @@
 [ext_resource path="res://src/procedural/dynamic_chunk/dynamic_chunk_body.gd" type="Script" id=2]
 
 [node name="DynamicChunkBody" type="StaticBody2D"]
+collision_mask = 0
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true,
