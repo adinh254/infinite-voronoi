@@ -4,10 +4,10 @@ extends PolyCollisionShape2D
 
 const Chunk := preload("res://src/procedural/chunk.gd")
 
-enum CSGState {
-	UNCHANGED,
-	IS_CHANGING,
-	CHANGED
+enum Shapes {
+	STATE_UNCHANGED,
+	STATE_UPDATING,
+	STATE_UPDATED
 }
 
  # NOTE: The clip node always Needs to be the last child to perform difference operations last.
@@ -17,12 +17,7 @@ onready var texture: Texture = root.texture setget set_texture, get_texture
 onready var subjects: PolyNode2D = root.get_node("Subjects") # Subject shapes that need to be the first child for boolean operations.
 onready var merge: PolyNode2D = root.get_node("Merge")  # Outline node that is the parent of OP_UNION PolyNode2Ds.
 onready var clip: PolyNode2D = root.get_node("Clip") # Outline node that is the parent of a OP_DIFF PolyNode2Ds.
-var _state: int = CSGState.UNCHANGED setget private_set
-
-
-func _ready() -> void:
-	# warning-ignore:return_value_discarded
-	self.connect("shapes_applied", self, "_on_Self_shapes_applied")
+var _state: int = Shapes.STATE_UNCHANGED setget private_set # State to track the shapes_updated signal whenever a node is added.
 
 
 func set_chunk_model(p_voronoi_chunk: VoronoiChunk) -> void:
@@ -56,31 +51,35 @@ func build_boolean_polygons_tree(p_walk: bool=true) -> void:
 		clip.make_from_outlines(clip_outlines)
 
 
-func add_clip_child(p_poly_node: PolyNode2D) -> void:
-	clip.add_child(p_poly_node)
-	_state = CSGState.IS_CHANGING
+func add_clipper(p_clipper: ConvexPolygonShape2D, p_transform: Transform2D) -> void:
+	var new_node: PolyNode2D = clip.new_child(p_clipper.points)
+	new_node.transform = p_transform
+	_update_shapes_state()
 
 
-func add_merge_child(p_poly_node: PolyNode2D) -> void:
-	merge.add_child(p_poly_node)
-	_state = CSGState.IS_CHANGING
+func add_merger(p_merger: ConvexPolygonShape2D, p_transform: Transform2D) -> void:
+	var new_node: PolyNode2D = merge.new_child(p_merger.points)
+	new_node.transform = p_transform
+	_update_shapes_state()
 
 
 func commit_outlines() -> void:
 	match _state:
-		CSGState.UNCHANGED:
+		Shapes.STATE_UNCHANGED:
 			return
-		CSGState.IS_CHANGING:
+		Shapes.STATE_UPDATING:
 			yield(self, "shapes_applied")
 			continue
-		CSGState.IS_CHANGING, CSGState.CHANGED:
+		Shapes.STATE_UPDATING, Shapes.STATE_UPDATED:
 			chunk_model.set_clip_outlines(clip.get_outlines())
 			chunk_model.set_merge_outlines(merge.get_outlines())
 			chunk_model.commit_chunk()
 
 
-func _on_Self_shapes_applied() -> void:
-	_state = CSGState.CHANGED
+func _update_shapes_state() -> void:
+	_state = Shapes.STATE_UPDATING
+	yield(self, "shapes_applied")
+	_state = Shapes.STATE_UPDATED
 
 
 #func set_custom_chunk(p_chunk_resource: Chunk) -> void:

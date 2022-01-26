@@ -29,17 +29,11 @@ func shape_owner_set_texture(p_texture: Texture, p_owner: int=_main_owner) -> vo
 
 
 func clip_colliders(p_clipper: ConvexPolygonShape2D, p_transform: Transform2D, p_owner: int =_main_owner) -> void:
-	var clip_node := PolyNode2D.new()
-	clip_node.points = p_clipper.points
-	clip_node.transform = p_transform
-	shape_owner_get_owner(p_owner).add_clip_child(clip_node)
+	shape_owner_get_owner(p_owner).add_clipper(p_clipper, p_transform)
 
 
 func merge_colliders(p_merger: ConvexPolygonShape2D, p_transform: Transform2D, p_owner: int=_main_owner) -> void:
-	var merge_node := PolyNode2D.new()
-	merge_node.points = p_merger.points
-	merge_node.transform = p_transform
-	shape_owner_get_owner(p_owner).add_merge_child(merge_node)
+	shape_owner_get_owner(p_owner).add_clipper(p_merger, p_transform)
 
 
 func set_cell_size(p_cell_size: float) -> void:
