@@ -25,5 +25,5 @@ func _on_Projectile_detonate(p_transform: Transform2D) -> void:
 	effect.setup(p_transform)
 
 
-func _on_Effect_shape_overlap(p_body: DynamicChunkBody, _p_body_shape_idx: int, effect_shape: ConvexPolygonShape2D, effect_shape_global: Transform2D) -> void:
+func _on_Effect_shape_overlap(p_body: DynamicChunkBody, effect_shape: ConvexPolygonShape2D, effect_shape_global: Transform2D) -> void:
 	p_body.clip_colliders(effect_shape, p_body.global_transform.affine_inverse() * effect_shape_global)
