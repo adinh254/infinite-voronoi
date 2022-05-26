@@ -19,11 +19,11 @@ You could also "smooth" out the shapes by increasing the Lloyd relaxation counts
 <!-- Random Walk & Percolation Examples -->
 ### Random Walk & Percolation Examples
 
-<p align="center" width="100%">
-  <img width="33%" src="/images/2765389554-1-0.5.gif?raw=true">
-  <img width="33%" src="/images/2241024972-2-0.3.gif?raw=true">
-  <img width="33%" align="left" src="/images/3702110211-3-0.7.gif?raw=true">
-</p>
+<div style="display: inline-block;" max-width="50%">
+    <img width="50%" src="/images/2765389554-1-0.5.gif?raw=true">
+    <img width="50%" src="/images/2241024972-2-0.3.gif?raw=true">
+    <img width="50%" src="/images/3702110211-3-0.7.gif?raw=true">
+</div>
 
 <p>
   Left Parameters: seed=2765389554; percolation_threshold=0.5; relaxation_count=1
