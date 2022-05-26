@@ -2,7 +2,7 @@
 ## Procedural Voronoi
 
 <p align="center" width="100%">
-    <img width="50%" src="/images/415064331.gif?raw=true">
+    <img width="100%" src="/images/415064331.gif?raw=true">
 </p>
 
 This project is a tool coded in GDScript and C++ for use in a game I'm developing in Godot. The purpose of it is to seamlessly and infinitely generate interconnected polygons
@@ -19,10 +19,10 @@ You could also "smooth" out the shapes by increasing the Lloyd relaxation counts
 <!-- Random Walk & Percolation Examples -->
 ### Random Walk & Percolation Examples
 
-<p align width="100%">
-  <img width="31%" align="left" src="/images/2765389554-1-0.5.gif?raw=true">
-  <img width="31%" align="center" src="/images/2241024972-2-0.3.gif?raw=true">
-  <img width="31%" align="left" src="/images/3702110211-3-0.7.gif?raw=true">
+<p align="center" width="100%">
+  <img width="33%" src="/images/2765389554-1-0.5.gif?raw=true">
+  <img width="33%" src="/images/2241024972-2-0.3.gif?raw=true">
+  <img width="33%" align="left" src="/images/3702110211-3-0.7.gif?raw=true">
 </p>
 
 <p>
