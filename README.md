@@ -1,5 +1,5 @@
 <!-- ABOUT -->
-## Procedural Voronoi
+## Infinite Voronoi
 
 <p align="center" width="100%">
     <img width="100%" src="/images/415064331.gif?raw=true">
