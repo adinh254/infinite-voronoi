@@ -46,7 +46,7 @@ You will need the [Goost 1.2 binary](https://github.com/goostengine/goost/releas
 ### Installation
 Clone the repo
    ```sh
-   git clone https://github.com/adinh254/procedural-voronoi.git
+   git clone https://github.com/adinh254/infinite-voronoi.git
    ```
 After cloning all you will need to do is run the Goost binary and import the project.godot file from your local folder where you cloned this repository.
 To run a demo, simply press the play button near the top right when in the engine.
